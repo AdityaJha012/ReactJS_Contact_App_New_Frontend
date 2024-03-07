@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ContactCard from './ContactCard';
 
 const ContactList = (props) => {
+  const searchInput = useRef("");
+
+  const deleteContactDetails = (id) => {
+    props.deleteContactHandler(id);
+  }
+
+  const restoreContactDetails = (id) => {
+    props.restoreContactHandler(id);
+  }
+
   const renderContactList = props.contacts.map((contact) => {
     return(
-      <ContactCard contact = { contact } click></ContactCard>
+      <ContactCard contact = { contact } deleteHandler = { deleteContactDetails } restoreHandler = { restoreContactDetails } />
     );
   });
+
+  const getSearchTerm = () => {
+    props.searchKeyword(searchInput.current.value);
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -17,12 +31,13 @@ const ContactList = (props) => {
             </Link>
         </h2>
         <br />
-        <input type="text"
+
+        <input type="text" ref={ searchInput }
             placeholder="Search Contacts..."
-            className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500 mb-4"></input>
+            className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500 mb-4" value={ props.term } onChange={ getSearchTerm }/>
 
         <div className="grid grid-cols-1 gap-4">
-          { renderContactList }
+          { renderContactList.length > 0 ? renderContactList : "No Contacts Available!" }
         </div>
     </div>
   )

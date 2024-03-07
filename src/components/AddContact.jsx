@@ -8,6 +8,7 @@ class AddContact extends Component {
         firstName: "",
         middleName: "",
         lastName: "",
+        gender: "",
         dateOfBirth: null,
         companyName: "",
         jobTitle: "",
@@ -22,7 +23,10 @@ class AddContact extends Component {
     addContact = (event) => {
         event.preventDefault();
 
-        if (this.state.firstName === "" || this.state.middleName === "" || this.state.lastName === "" || this.state.dateOfBirth === null || this.state.companyName === "" || this.state.jobTitle === "" || this.state.officeAddress === "" || this.state.annualIncome === "" || this.state.emailId === "" || this.state.mobileNo === "" || this.state.address === "") {
+        if (this.state.firstName === "" || this.state.middleName === "" || this.state.lastName === "" || this.state.gender === "" ||
+            this.state.dateOfBirth === null || this.state.companyName === "" || this.state.jobTitle === "" || 
+            this.state.officeAddress === "" || this.state.annualIncome === "" || this.state.emailId === "" || 
+            this.state.mobileNo === "" || this.state.address === "") {
             alert("All the Fields are Mandatory!");
             return;
         }
@@ -35,6 +39,7 @@ class AddContact extends Component {
             firstName: this.state.firstName,
             middleName: this.state.middleName,
             lastName: this.state.lastName,
+            gender: this.state.gender,
             dateOfBirth: formattedDateOfBirth,
             companyName: this.state.companyName,
             jobTitle: this.state.jobTitle,
@@ -47,7 +52,7 @@ class AddContact extends Component {
         };
 
         this.props.addContactHandler(contactDetails);
-        this.setState({ firstName: "", middleName: "", lastName: "", dateOfBirth: null, companyName: "", jobTitle: "", officeAddress: "", annualIncome: "", emailId: "", mobileNo: "", address: "", remarks: ""  });
+        this.setState({ firstName: "", middleName: "", lastName: "", gender: "", dateOfBirth: null, companyName: "", jobTitle: "", officeAddress: "", annualIncome: "", emailId: "", mobileNo: "", address: "", remarks: ""  });
         this.props.history.push("/");
     }
 
@@ -64,20 +69,29 @@ class AddContact extends Component {
             <div className="container mx-auto p-4">
                 <h2 className="text-3xl font-bold underline mb-4">Add Contact Details</h2>
                 <form className="ui form" onSubmit={ this.addContact }>
-                    <div className="flex flex-wrap -mx-3 mb-4">
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <div className="flex flex-wrap -mx-4 mb-4">
+                        <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
                             <label htmlFor="firstName" className="block text-gray-700 font-bold mb-2">First Name</label>
                             <input type="text" name="firstName" id="firstName" placeholder="Enter first Name..." value={ this.state.firstName } onChange={(e) => this.setState({ firstName: e.target.value })} className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500" />
                         </div>
 
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
                             <label htmlFor="middleName" className="block text-gray-700 font-bold mb-2">Middle Name</label>
                             <input type="text" name="middleName" id="middleName" placeholder="Enter Middle Name..." value={ this.state.middleName } onChange={(e) => this.setState({ middleName: e.target.value })} className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500" />
                         </div>
 
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
                             <label htmlFor="lastName" className="block text-gray-700 font-bold mb-2">Last Name</label>
                             <input type="text" name="lastName" id="lastName" placeholder="Enter Last Name..." value={ this.state.lastName } onChange={(e) => this.setState({ lastName: e.target.value })} className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500" />
+                        </div>
+
+                        <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+                            <label htmlFor="lastName" className="block text-gray-700 font-bold mb-2">Gender</label>
+                            <select name="gender" id="gender" value={ this.state.gender } onChange={(e) => this.setState({ gender: e.target.value })} className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
                         </div>
                     </div>
 
@@ -119,7 +133,7 @@ class AddContact extends Component {
 
                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label htmlFor="mobileNo" className="block text-gray-700 font-bold mb-2">Mobile No</label>
-                            <input type="text" name="mobileNo" id="mobileNo" placeholder="Enter Mobile No..." value={ this.state.mobileNo } onChange={(e) => this.setState({ mobileNo: e.target.value })} className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500" pattern="^[0-9]*$" />
+                            <input type="text" name="mobileNo" id="mobileNo" maxLength="10" placeholder="Enter Mobile No..." value={ this.state.mobileNo } onChange={(e) => this.setState({ mobileNo: e.target.value })} className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500" pattern="^[0-9]*$" />
                         </div>
                     </div>
 
